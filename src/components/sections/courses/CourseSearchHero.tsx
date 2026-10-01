@@ -4,14 +4,20 @@ import { BrandSection } from "@/components/ui/BrandSection";
 import { Container } from "@/components/ui/Container";
 import { SearchField } from "@/components/ui/SearchField";
 import { SEARCH_SCOPES, type SearchScope } from "@/lib/catalog";
+import { filterSearchParams, type CourseFilters } from "@/lib/course-filters";
 
 type CourseSearchHeroProps = {
   query: string;
   scope: SearchScope;
+  /** Kept on a new search through hidden fields. */
+  filters: CourseFilters;
 };
 
-/** Blue search header. Submitting the form reloads /courses with `?q=&in=` (works without JavaScript). */
-export function CourseSearchHero({ query, scope }: CourseSearchHeroProps) {
+/**
+ * Blue search header. Submitting the form loads /courses with `?q=&in=` plus the active filters
+ * (works without JavaScript).
+ */
+export function CourseSearchHero({ query, scope, filters }: CourseSearchHeroProps) {
   return (
     <BrandSection aria-labelledby="search-title" className="pt-32 pb-14 lg:pt-[160px] lg:pb-[72px]">
       <Container className="text-center">
@@ -22,6 +28,9 @@ export function CourseSearchHero({ query, scope }: CourseSearchHeroProps) {
         </Reveal>
         <Reveal onMount delay={0.1}>
           <form action="/courses" role="search" className="mx-auto mt-6 flex max-w-[620px] gap-3">
+            {[...filterSearchParams(filters)].map(([name, value]) => (
+              <input key={name} type="hidden" name={name} value={value} />
+            ))}
             <SearchField
               name="q"
               defaultValue={query}
