@@ -1,9 +1,9 @@
 import type { NavLink } from "@/types";
 
 export const mainNav: NavLink[] = [
-  { label: "Home", href: "/", sectionId: "top" },
-  { label: "Courses", href: "/#courses", sectionId: "courses" },
-  { label: "Creators", href: "/#creators", sectionId: "creators" },
+  { label: "Home", href: "/" },
+  { label: "Courses", href: "/courses" },
+  { label: "Creators", href: "/creators" },
 ];
 
 export const authNav = {
