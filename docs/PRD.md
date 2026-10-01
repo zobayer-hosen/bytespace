@@ -253,8 +253,9 @@ these fixes before launch:
 - The "Courses ▾" control on the search page chooses what to search: course titles or creator names.
 
 **Assets.** Photos and 3D objects could not be exported from Figma (view-only access). Photos are
-Unsplash placeholders, the two cut-out portraits in `public/images/people/` were made from Unsplash
-photos, and the 3D objects are SVG recreations. Export the originals from Figma into `public/images/`
+Unsplash placeholders and the 3D objects are SVG recreations. The hero student is cut out of a
+supplied photo (yellow studio background removed); the growth and creator cut-outs in
+`public/images/people/` were made from Unsplash photos. Export the originals from Figma into `public/images/`
 and update `src/data/media.ts`.
 
 **Follow-ups.**

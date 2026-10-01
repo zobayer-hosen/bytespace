@@ -13,6 +13,7 @@ function portrait(id: string) {
 
 export const media = {
   people: {
+    heroStudent: "/images/people/hero-student.webp",
     student: "/images/people/student.webp",
     creator: "/images/people/creator.webp",
   },
