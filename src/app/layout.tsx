@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
+import { ScrollToTopOnReload } from "@/components/layout/ScrollToTopOnReload";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body>
+        <ScrollToTopOnReload />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
