@@ -74,8 +74,9 @@ src/
 
 The Figma file is view-only, so the original assets could not be exported:
 
-- The hero student (`public/images/people/hero-student.webp`) is cut out of a supplied photo, with
-  the yellow studio background removed.
+- The hero student (`public/images/people/hero-student.webp`) is cut out of a supplied 740×416 photo:
+  upscaled 4× with Real-ESRGAN, then the yellow studio background removed. A higher-resolution
+  original would look sharper still.
 - Other photos are Unsplash placeholders. The growth and creator cut-outs in `public/images/people/`
   were made from Unsplash photos for this build.
 - The 3D objects (squiggle, cylinder, cone, torus) are SVG recreations in `src/components/shapes/`.
