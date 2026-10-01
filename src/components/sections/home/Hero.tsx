@@ -69,9 +69,10 @@ function HeroStage() {
       <Image
         src={media.people.heroStudent}
         alt="Student working on a laptop, surrounded by books"
-        width={1110}
-        height={706}
+        width={2200}
+        height={1401}
         priority
+        quality={90}
         sizes="(min-width: 1110px) 733px, 78vw"
         className="absolute bottom-0 left-[17.7%] w-[78%] sm:left-[22.7%] sm:w-[66%]"
       />

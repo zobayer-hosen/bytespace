@@ -254,7 +254,7 @@ these fixes before launch:
 
 **Assets.** Photos and 3D objects could not be exported from Figma (view-only access). Photos are
 Unsplash placeholders and the 3D objects are SVG recreations. The hero student is cut out of a
-supplied photo (yellow studio background removed); the growth and creator cut-outs in
+supplied 740×416 photo (AI-upscaled 4× with Real-ESRGAN, yellow studio background removed); the growth and creator cut-outs in
 `public/images/people/` were made from Unsplash photos. Export the originals from Figma into `public/images/`
 and update `src/data/media.ts`.
 
