@@ -1,8 +1,10 @@
 import { Building, Camera, CodeXml, Laptop, Megaphone, PencilRuler } from "lucide-react";
 import type { LearningPath } from "@/types";
 
+/** Label of the first chip, which shows every course instead of one category. */
+export const FEATURED_LABEL = "Featured";
+
 export const courseCategories = [
-  "Featured",
   "Music",
   "Drawing & Painting",
   "Marketing",
@@ -20,7 +22,9 @@ export const courseCategories = [
   "Web Development",
   "Data Science",
   "Cooking",
-];
+] as const;
+
+export type CourseCategory = (typeof courseCategories)[number];
 
 export const learningPaths: LearningPath[] = [
   { label: "Design", icon: PencilRuler },
