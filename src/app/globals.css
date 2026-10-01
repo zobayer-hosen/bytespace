@@ -33,14 +33,6 @@
   background-position: -1px -1px;
 }
 
-/* Hides a scroll container's scrollbar while keeping it scrollable. */
-@utility scrollbar-none {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 @layer base {
   body {
     @apply bg-white font-sans text-ink antialiased;
