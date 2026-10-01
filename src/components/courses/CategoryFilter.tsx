@@ -46,13 +46,16 @@ export function CategoryFilter({
         stagger={0.03}
         className={cn("flex flex-wrap gap-3", align === "center" ? "justify-center sm:gap-5" : "sm:gap-4")}
       >
-        {visibleChips.map((category) => (
-          <StaggerItem key={category ?? FEATURED_LABEL}>
-            <Chip active={category === value} onClick={() => onChange(category)}>
-              {category ?? FEATURED_LABEL}
-            </Chip>
-          </StaggerItem>
-        ))}
+        {visibleChips.map((category) => {
+          const label = category ?? FEATURED_LABEL;
+          return (
+            <StaggerItem key={label} className="max-w-full">
+              <Chip active={category === value} onClick={() => onChange(category)} title={label}>
+                <span className="min-w-0 truncate">{label}</span>
+              </Chip>
+            </StaggerItem>
+          );
+        })}
         {hiddenCount > 0 && (
           <StaggerItem>
             <button
