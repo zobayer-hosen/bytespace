@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatedCourseGrid } from "@/components/courses/AnimatedCourseGrid";
 import { CategoryFilter } from "@/components/courses/CategoryFilter";
-import { CourseGrid } from "@/components/courses/CourseGrid";
 import { EmptyResults } from "@/components/courses/EmptyResults";
+import { Reveal } from "@/components/motion/Reveal";
 import type { CourseCategory } from "@/data/categories";
 import { courses } from "@/data/courses";
 import { coursesForChip } from "@/lib/course-filters";
@@ -33,13 +34,14 @@ export function CourseBrowser() {
         {resultsMessage(visibleCourses.length, category)}
       </p>
       {visibleCourses.length > 0 ? (
-        <CourseGrid courses={visibleCourses} className="mt-14 lg:mt-16" />
+        <AnimatedCourseGrid courses={visibleCourses} className="mt-14 lg:mt-16" />
       ) : (
-        <EmptyResults
-          title="No courses in this category yet."
-          action={{ label: "Show featured courses", onClick: () => setCategory(null) }}
-          className="mt-14 lg:mt-16"
-        />
+        <Reveal onMount className="mt-14 lg:mt-16">
+          <EmptyResults
+            title="No courses in this category yet."
+            action={{ label: "Show featured courses", onClick: () => setCategory(null) }}
+          />
+        </Reveal>
       )}
     </>
   );
