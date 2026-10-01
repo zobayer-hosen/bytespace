@@ -12,16 +12,19 @@ const sharedStats = {
   learners: 26,
 } satisfies Partial<Course>;
 
+/** The Figma cards show no category, so each course's category is assigned from its title. */
 export const courses: Course[] = [
   {
     ...sharedStats,
     slug: "learn-figma-from-basic",
+    category: "UI/UX Design",
     title: "Learn Figma from Basic",
     image: media.courses.figma,
   },
   {
     ...sharedStats,
     slug: "build-digital-asset",
+    category: "Graphic Design",
     title: "Build Digital Asset",
     headline: "Build Digital Asset: A Comprehensive Guide",
     image: media.courses.digitalAsset,
@@ -29,24 +32,28 @@ export const courses: Course[] = [
   {
     ...sharedStats,
     slug: "the-power-of-big-data",
+    category: "Data Science",
     title: "the Power of Big Data",
     image: media.courses.bigData,
   },
   {
     ...sharedStats,
     slug: "balancing-productivity-and-wellbeing",
+    category: "Productivity",
     title: "Balancing Productivity and Wellbeing",
     image: media.courses.productivity,
   },
   {
     ...sharedStats,
     slug: "mastering-money-management",
+    category: "Freelance & Entrepreneurship",
     title: "Mastering Money Management",
     image: media.courses.money,
   },
   {
     ...sharedStats,
     slug: "from-idea-to-startup-success",
+    category: "Freelance & Entrepreneurship",
     title: "From Idea to Startup Success",
     image: media.courses.startup,
   },

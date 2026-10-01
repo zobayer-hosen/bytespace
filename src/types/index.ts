@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { CourseCategory } from "@/data/categories";
 
 export type NavLink = {
   label: string;
@@ -18,6 +19,7 @@ export type Course = {
   comments: number;
   rating: number;
   level: CourseLevel;
+  category: CourseCategory;
   price: number;
   creatorSlug: string;
   /** Number of learners shown in the card's avatar stack badge ("26+"). */
