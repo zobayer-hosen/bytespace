@@ -27,9 +27,9 @@ npm run dev        # http://localhost:3000
 | Route              | Figma frame                                | Notes                                                                   |
 | ------------------ | ------------------------------------------ | ----------------------------------------------------------------------- |
 | `/`                | Home                                       | 10 sections, scroll animations                                          |
-| `/courses`         | Search Page                                | `?q=` search, `?in=courses\|creators` scope, `?page=` pagination         |
+| `/courses`         | Search Page                                | `?q=` search, `?in=` scope, `?category=` `?level=` `?sort=` filters, `?page=` |
 | `/courses/[slug]`  | Course Detail / Course Lessons / Reviews   | About · Lessons · Reviews tabs, sticky enrol card, review star filter   |
-| `/creators/[slug]` | Creator Profile                            | Header, follow toggle, the creator's courses                            |
+| `/creators/[slug]` | Creator Profile                            | Header, follow toggle, the creator's courses with filters and sort      |
 | `/login`           | Login                                      | Client-side validation, social buttons                                  |
 | `/signup`          | Register                                   | Client-side validation                                                  |
 | any unknown URL    | 404 Not Found                              | Also rendered for unknown course / creator slugs                        |
@@ -50,14 +50,14 @@ src/
 ├── components/
 │   ├── layout/                 # Navbar, Footer, Logo, SiteShell, NewsletterForm
 │   ├── sections/<page>/        # one file per page section
-│   ├── courses/                # CourseGrid, CategoryFilter, CourseToolbar
+│   ├── courses/                # CourseGrid, CategoryFilter, CourseToolbar, FilterPanel, useCourseFilters
 │   ├── cards/                  # CourseCard, ProgressCard, HappyStudentsCard, ...
 │   ├── auth/                   # AuthShowcase, AuthPanel, AuthForm, SocialSignIn
 │   ├── ui/                     # Button, Chip, Pill, Tabs, FormField, Pagination, ...
 │   ├── shapes/                 # 3D decorative SVGs + floating Decorations layer
 │   └── motion/                 # Reveal, Stagger, Float, CountUp, MotionProvider
 ├── data/                       # typed content: courses, creators, navigation, media, ...
-├── lib/                        # cn(), catalogue search, form validation
+├── lib/                        # cn(), catalogue search, course filters/sort, form validation
 └── types/                      # shared TypeScript types
 ```
 
