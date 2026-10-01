@@ -32,11 +32,20 @@ const comparators: Record<SortOption, ((a: Course, b: Course) => number) | null>
   title: (a, b) => a.title.localeCompare(b.title, "en", { sensitivity: "base" }),
 };
 
+export function isInCategory(course: Course, category: CourseCategory) {
+  return course.categories.includes(category);
+}
+
+/** Courses for a landing-page chip: Featured (`null`) lists the featured courses, any other chip its category. */
+export function coursesForChip(courses: readonly Course[], category: CourseCategory | null) {
+  return courses.filter((course) => (category ? isInCategory(course, category) : course.featured));
+}
+
 /** Keeps the courses matching the category and level, then sorts them (ties keep catalogue order). */
 export function applyCourseFilters(courses: readonly Course[], filters: CourseFilters) {
   const matches = courses.filter(
     (course) =>
-      (!filters.category || course.categories.includes(filters.category)) &&
+      (!filters.category || isInCategory(course, filters.category)) &&
       (!filters.level || course.level === filters.level),
   );
   const compare = comparators[filters.sort];
@@ -62,7 +71,7 @@ export type CourseFacets = {
  * so a dropdown shows how many courses picking that option would return.
  */
 export function countFacets(courses: readonly Course[], filters: CourseFilters): CourseFacets {
-  const inCategory = courses.filter((course) => !filters.category || course.categories.includes(filters.category));
+  const inCategory = courses.filter((course) => !filters.category || isInCategory(course, filters.category));
   const atLevel = courses.filter((course) => !filters.level || course.level === filters.level);
   const count = (list: readonly Course[], match: (course: Course) => boolean) => list.filter(match).length;
 
@@ -76,7 +85,7 @@ export function countFacets(courses: readonly Course[], filters: CourseFilters):
     categories: {
       all: atLevel.length,
       ...(Object.fromEntries(
-        courseCategories.map((category) => [category, count(atLevel, (course) => course.categories.includes(category))]),
+        courseCategories.map((category) => [category, count(atLevel, (course) => isInCategory(course, category))]),
       ) as Record<CourseCategory, number>),
     },
   };
