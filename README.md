@@ -4,10 +4,10 @@ Front end for **ByteSpace**, an online course marketplace where learners find co
 them. It is built from the "ByteSpace New Check website" Figma file with Next.js 15, TypeScript, Tailwind CSS v4
 and Framer Motion.
 
-![ByteSpace landing page](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/home.jpg)
+![ByteSpace landing page](docs/screenshots/home.jpg)
 
 The full product spec (design tokens, page requirements, motion spec, open questions) is in the
-[PRD](https://github.com/zobayer-hosen/bytespace/blob/feature/landing-page/docs/PRD.md).
+[PRD](docs/PRD.md).
 
 ## Contents
 
@@ -234,15 +234,15 @@ the URL options). The other pages are prerendered.
 
 | Course search | Course detail |
 | --- | --- |
-| ![Course search page](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/courses.jpg) | ![Course detail page](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/course-detail.jpg) |
+| ![Course search page](docs/screenshots/courses.jpg) | ![Course detail page](docs/screenshots/course-detail.jpg) |
 
 | Creator profile | Sign in | 404 |
 | --- | --- | --- |
-| ![Creator profile page](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/creator.jpg) | ![Sign-in page](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/login.jpg) | ![404 page](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/not-found.jpg) |
+| ![Creator profile page](docs/screenshots/creator.jpg) | ![Sign-in page](docs/screenshots/login.jpg) | ![404 page](docs/screenshots/not-found.jpg) |
 
 | Mobile: landing page | Mobile: course detail |
 | --- | --- |
-| ![Landing page on a phone](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/mobile-home.jpg) | ![Course detail on a phone](https://raw.githubusercontent.com/zobayer-hosen/bytespace/feature/landing-page/docs/screenshots/mobile-course-detail.jpg) |
+| ![Landing page on a phone](docs/screenshots/mobile-home.jpg) | ![Course detail on a phone](docs/screenshots/mobile-course-detail.jpg) |
 
 ## License
 
