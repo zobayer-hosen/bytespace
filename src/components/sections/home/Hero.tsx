@@ -65,23 +65,24 @@ function HeroStage() {
     <Reveal onMount delay={0.45} className="relative mx-auto mt-16 aspect-[1110/452] w-full max-w-[1110px] lg:mt-20">
       <div aria-hidden className="absolute top-0 left-0 aspect-square w-full rounded-full bg-accent" />
 
+      {/* The student's face sits at ~41% of the image width, so `left = 50% - 0.41 × width` centres her. */}
       <Image
-        src={media.people.student}
-        alt="Smiling student"
-        width={894}
-        height={1005}
+        src={media.people.heroStudent}
+        alt="Student working on a laptop, surrounded by books"
+        width={1110}
+        height={706}
         priority
-        sizes="(min-width: 1110px) 430px, 40vw"
-        className="absolute bottom-0 left-1/2 h-[104%] w-auto -translate-x-1/2"
+        sizes="(min-width: 1110px) 733px, 78vw"
+        className="absolute bottom-0 left-[17.7%] w-[78%] sm:left-[22.7%] sm:w-[66%]"
       />
 
-      <Float className="absolute top-[14%] left-[21%] hidden sm:block" duration={5}>
+      <Float className="absolute top-[14%] left-[21%] hidden lg:block" duration={5}>
         <TopicCard title={highlightTopic.title} meta={[highlightTopic.courses, highlightTopic.students]} />
       </Float>
-      <Float className="absolute top-[16%] left-[61%] hidden w-[230px] sm:block" duration={6} delay={0.4}>
+      <Float className="absolute top-[14%] left-[63%] hidden w-[230px] lg:block" duration={6} delay={0.4}>
         <ProgressCard value={learningProgress} />
       </Float>
-      <Float className="absolute top-[57%] left-[15%] hidden sm:block" duration={5.5} delay={0.8}>
+      <Float className="absolute top-[38%] left-[8%] hidden lg:block" duration={5.5} delay={0.8}>
         <HappyStudentsCard />
       </Float>
     </Reveal>

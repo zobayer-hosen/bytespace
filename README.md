@@ -74,8 +74,10 @@ src/
 
 The Figma file is view-only, so the original assets could not be exported:
 
-- Photos are Unsplash placeholders. The two cut-out portraits in `public/images/people/` were made
-  from Unsplash photos for this build.
+- The hero student (`public/images/people/hero-student.webp`) is cut out of a supplied photo, with
+  the yellow studio background removed.
+- Other photos are Unsplash placeholders. The growth and creator cut-outs in `public/images/people/`
+  were made from Unsplash photos for this build.
 - The 3D objects (squiggle, cylinder, cone, torus) are SVG recreations in `src/components/shapes/`.
 
 To use the real assets, export them from Figma into `public/images/` and update `src/data/media.ts`.
