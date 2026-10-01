@@ -97,7 +97,7 @@ Each section is its own component in `src/components/sections/home/`, composed i
 | 1 | **Navbar** | `layout/Navbar` | Logo; center links Home (active), Courses, Creators; right: Sign In, Join Us, cart icon. Transparent over the blue hero. Mobile: hamburger with animated slide-down menu. |
 | 2 | **Hero** | `Hero` | Blue grid background. H1 "Get Access to Hundreds Courses Available", subtitle, search bar ("Course, topic, creator") with lime Search button. Lime half-circle stage with student photo and three floating cards: *UI/UX Design* (200 Courses · 1000+ Students), *Learning Progress* (55% bar), *Happy Students* (4.5 rating, avatar stack, 2K+). 3D shapes float around the edges. |
 | 3 | **Logo cloud** | `LogoCloud` | Grey band with five partner logos (placeholder "Logoipsum" marks). |
-| 4 | **Discover courses** | `DiscoverCourses` | H2 "Discover Your Passion, Build Your Skills", paragraph, category chips (Featured active; "+ More" reveals the rest, then "Show less"). Clicking a chip filters the 3×2 grid of `CourseCard` in place (no URL change); a category without courses shows an empty state with "Show featured courses". |
+| 4 | **Discover courses** | `DiscoverCourses` | H2 "Discover Your Passion, Build Your Skills", paragraph, category chips (Featured first and active; the first 8 are shown, "+ More" reveals the rest, then "Show less"). Featured shows the courses marked `featured`; any other chip shows the courses whose `categories` include it. Filtering happens in place (no URL change); a category without courses shows "No courses in this category yet." with "Show featured courses". |
 | 5 | **Learning paths** | `LearningPaths` | H2 "Explore Diverse Learning Paths at Bytespace", paragraph, six `CategoryTile`s (Design, Development, IT & Software, Business, Marketing, Photography). |
 | 6 | **Professional growth** | `GrowthSection` | Soft lime/blue gradient background. Left: H2, paragraph, stats 12K Students · 70+ Courses · 16 Creators. Right: course card, student photo, Learning Progress card, lime squiggle. |
 | 7 | **Create & manage** | `CreateManage` | Left: creator photo, blue *Total Revenue $120.29* and *Year to Date $1,200.38* cards, Happy Students card, squiggle. Right: H2 "Create & Manage Courses Easily.", paragraph, four checklist items. |
@@ -260,14 +260,17 @@ and update `src/data/media.ts`.
 
 **Course data behind the filters.** Filters and sorting only use real course fields:
 
-- Each course has a `category`. The Figma cards show none, so each one was assigned from the course title
-  (e.g. "the Power of Big Data" → Data Science). Categories with no course show an empty state.
+- Each course has `categories` (one or more) and `featured`. The Figma cards show neither, so categories were
+  assigned from the course titles (e.g. "the Power of Big Data" → Data Science; Build Digital Asset is also
+  UI/UX Design, from its UX module) and all six courses are featured, as in the design. Categories with no
+  course show an empty state.
 - All six demo courses are Beginner, rated 4.5 and have 26 learners (as on the Figma cards), so the Level
   filter, "Most popular" and "Highest rated" work but cannot separate them until real data varies.
 - There is no publish date, so a "Newest" sort is not offered.
 - The search page's demo catalogue repeats the six courses to fill five pages, so a category shows the same
   course many times (e.g. Data Science → 15 cards).
-- On desktop one row holds 7 chips plus "+ More" (Featured … UI/UX Design), so that is the collapsed set.
+- The landing page shows the first 8 chips before "+ More"; on desktop that is two rows (8 chips plus "+ More"
+  need about 1258px). The search page shows 7, which fit one row there.
 
 **Follow-ups.**
 

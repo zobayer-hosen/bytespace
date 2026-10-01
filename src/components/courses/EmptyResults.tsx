@@ -5,7 +5,7 @@ type EmptyResultsAction = { label: string; href: string } | { label: string; onC
 
 type EmptyResultsProps = {
   title: string;
-  description: string;
+  description?: string;
   action: EmptyResultsAction;
   className?: string;
 };
@@ -17,7 +17,7 @@ export function EmptyResults({ title, description, action, className }: EmptyRes
   return (
     <div className={cn("rounded-card border border-dashed border-line px-6 py-16 text-center", className)}>
       <p className="font-display text-xl font-semibold text-ink">{title}</p>
-      <p className="mt-2 text-sm text-muted">{description}</p>
+      {description && <p className="mt-2 text-sm text-muted">{description}</p>}
       {"href" in action ? (
         <Link href={action.href} className={actionClass}>
           {action.label}
