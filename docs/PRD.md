@@ -97,7 +97,7 @@ Each section is its own component in `src/components/sections/home/`, composed i
 | 1 | **Navbar** | `layout/Navbar` | Logo; center links Home (active), Courses, Creators; right: Sign In, Join Us, cart icon. Transparent over the blue hero. Mobile: hamburger with animated slide-down menu. |
 | 2 | **Hero** | `Hero` | Blue grid background. H1 "Get Access to Hundreds Courses Available", subtitle, search bar ("Course, topic, creator") with lime Search button. Lime half-circle stage with student photo and three floating cards: *UI/UX Design* (200 Courses · 1000+ Students), *Learning Progress* (55% bar), *Happy Students* (4.5 rating, avatar stack, 2K+). 3D shapes float around the edges. |
 | 3 | **Logo cloud** | `LogoCloud` | Grey band with five partner logos (placeholder "Logoipsum" marks). |
-| 4 | **Discover courses** | `DiscoverCourses` | H2 "Discover Your Passion, Build Your Skills", paragraph, category chips (Featured first and active; the first 8 are shown, "+ More" reveals the rest, then "Show less"). Featured shows the courses marked `featured`; any other chip shows the courses whose `categories` include it. Filtering happens in place (no URL change); a category without courses shows "No courses in this category yet." with "Show featured courses". |
+| 4 | **Discover courses** | `DiscoverCourses` | H2 "Discover Your Passion, Build Your Skills", paragraph, category chips (Featured first and active; the first 8 are shown, "+ More" reveals the rest, then "Show less"). Featured shows the courses marked `featured`; any other chip shows the courses whose `categories` include it. Filtering happens in place (no URL change): removed cards fade out, the rest reflow and new cards fade in, and a visually hidden live region announces the result (e.g. "Showing 2 courses in UI/UX Design"). A category without courses shows "No courses in this category yet." with "Show featured courses". Long chip labels truncate instead of overflowing. |
 | 5 | **Learning paths** | `LearningPaths` | H2 "Explore Diverse Learning Paths at Bytespace", paragraph, six `CategoryTile`s (Design, Development, IT & Software, Business, Marketing, Photography). |
 | 6 | **Professional growth** | `GrowthSection` | Soft lime/blue gradient background. Left: H2, paragraph, stats 12K Students · 70+ Courses · 16 Creators. Right: course card, student photo, Learning Progress card, lime squiggle. |
 | 7 | **Create & manage** | `CreateManage` | Left: creator photo, blue *Total Revenue $120.29* and *Year to Date $1,200.38* cards, Happy Students card, squiggle. Right: H2 "Create & Manage Courses Easily.", paragraph, four checklist items. |
@@ -153,6 +153,7 @@ messages under the field; submit shows a loading state then a success message. N
 | **Mobile menu** | Navbar | `AnimatePresence` height/opacity |
 | **Auth panel** | Login / Signup | Panel slides in from right, showcase cards drop in with stagger |
 | **Tabs** | Course detail | Panels cross-fade with a 12px rise |
+| **Filtered grid** | Discover courses | Cards exit with fade + 0.97 scale (0.2s), remaining cards reflow (layout, 0.35s), new cards fade up |
 
 All motion is wrapped in `MotionConfig reducedMotion="user"`, so users with reduced-motion settings get
 static content.
