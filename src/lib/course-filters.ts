@@ -36,7 +36,7 @@ const comparators: Record<SortOption, ((a: Course, b: Course) => number) | null>
 export function applyCourseFilters(courses: readonly Course[], filters: CourseFilters) {
   const matches = courses.filter(
     (course) =>
-      (!filters.category || course.category === filters.category) &&
+      (!filters.category || course.categories.includes(filters.category)) &&
       (!filters.level || course.level === filters.level),
   );
   const compare = comparators[filters.sort];
@@ -62,7 +62,7 @@ export type CourseFacets = {
  * so a dropdown shows how many courses picking that option would return.
  */
 export function countFacets(courses: readonly Course[], filters: CourseFilters): CourseFacets {
-  const inCategory = courses.filter((course) => !filters.category || course.category === filters.category);
+  const inCategory = courses.filter((course) => !filters.category || course.categories.includes(filters.category));
   const atLevel = courses.filter((course) => !filters.level || course.level === filters.level);
   const count = (list: readonly Course[], match: (course: Course) => boolean) => list.filter(match).length;
 
@@ -76,7 +76,7 @@ export function countFacets(courses: readonly Course[], filters: CourseFilters):
     categories: {
       all: atLevel.length,
       ...(Object.fromEntries(
-        courseCategories.map((category) => [category, count(atLevel, (course) => course.category === category)]),
+        courseCategories.map((category) => [category, count(atLevel, (course) => course.categories.includes(category))]),
       ) as Record<CourseCategory, number>),
     },
   };

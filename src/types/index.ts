@@ -19,7 +19,10 @@ export type Course = {
   comments: number;
   rating: number;
   level: CourseLevel;
-  category: CourseCategory;
+  /** A course can belong to several categories. */
+  categories: CourseCategory[];
+  /** Shown under the landing page's "Featured" chip. */
+  featured: boolean;
   price: number;
   creatorSlug: string;
   /** Number of learners shown in the card's avatar stack badge ("26+"). */

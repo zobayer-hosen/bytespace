@@ -12,19 +12,25 @@ const sharedStats = {
   learners: 26,
 } satisfies Partial<Course>;
 
-/** The Figma cards show no category, so each course's category is assigned from its title. */
+/**
+ * The Figma cards show no categories, so they are assigned from each course's title (and, for
+ * Build Digital Asset, from its module list on the course page). All six courses appear under
+ * "Featured" in the design.
+ */
 export const courses: Course[] = [
   {
     ...sharedStats,
     slug: "learn-figma-from-basic",
-    category: "UI/UX Design",
+    categories: ["UI/UX Design"],
+    featured: true,
     title: "Learn Figma from Basic",
     image: media.courses.figma,
   },
   {
     ...sharedStats,
     slug: "build-digital-asset",
-    category: "Graphic Design",
+    categories: ["Graphic Design", "UI/UX Design"],
+    featured: true,
     title: "Build Digital Asset",
     headline: "Build Digital Asset: A Comprehensive Guide",
     image: media.courses.digitalAsset,
@@ -32,28 +38,32 @@ export const courses: Course[] = [
   {
     ...sharedStats,
     slug: "the-power-of-big-data",
-    category: "Data Science",
+    categories: ["Data Science"],
+    featured: true,
     title: "the Power of Big Data",
     image: media.courses.bigData,
   },
   {
     ...sharedStats,
     slug: "balancing-productivity-and-wellbeing",
-    category: "Productivity",
+    categories: ["Productivity"],
+    featured: true,
     title: "Balancing Productivity and Wellbeing",
     image: media.courses.productivity,
   },
   {
     ...sharedStats,
     slug: "mastering-money-management",
-    category: "Freelance & Entrepreneurship",
+    categories: ["Freelance & Entrepreneurship"],
+    featured: true,
     title: "Mastering Money Management",
     image: media.courses.money,
   },
   {
     ...sharedStats,
     slug: "from-idea-to-startup-success",
-    category: "Freelance & Entrepreneurship",
+    categories: ["Freelance & Entrepreneurship"],
+    featured: true,
     title: "From Idea to Startup Success",
     image: media.courses.startup,
   },
