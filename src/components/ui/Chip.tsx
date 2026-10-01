@@ -11,12 +11,16 @@ type ChipStyleProps = {
   className?: string;
 };
 
-/** Pill styling shared by filter chips and tab triggers: lime when active, soft grey otherwise. */
+/**
+ * Pill styling shared by filter chips and tab triggers: lime and medium weight when active, soft grey
+ * otherwise. `max-w-full` lets a chip shrink to its container (wrap long labels in a `truncate` span).
+ */
 export function chipStyles({ active = false, size = "md", className }: ChipStyleProps = {}) {
   return cn(
-    "inline-flex shrink-0 items-center gap-1.5 rounded-full whitespace-nowrap transition-colors duration-200",
+    "inline-flex max-w-full shrink-0 items-center gap-1.5 rounded-full whitespace-nowrap transition duration-200",
+    "active:scale-[0.97] motion-reduce:transform-none",
     sizes[size],
-    active ? "bg-accent font-medium text-ink" : "bg-surface text-ink/75 hover:bg-line",
+    active ? "bg-accent font-medium text-ink hover:bg-accent-600" : "bg-surface text-ink/75 hover:bg-line hover:text-ink",
     className,
   );
 }
