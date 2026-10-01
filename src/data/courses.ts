@@ -21,7 +21,7 @@ export const courses: Course[] = [
   {
     ...sharedStats,
     slug: "learn-figma-from-basic",
-    categories: ["UI/UX Design"],
+    categories: ["UI/UX Design", "Graphic Design"],
     featured: true,
     title: "Learn Figma from Basic",
     image: media.courses.figma,
