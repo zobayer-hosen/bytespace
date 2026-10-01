@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Project docs (PRD, screenshots) live on the feature branches only
+docs/
