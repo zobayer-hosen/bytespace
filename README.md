@@ -1,11 +1,10 @@
 # ByteSpace
 
 Front end for **ByteSpace**, an online course marketplace for learners and creators, built from the
-"ByteSpace New Check website" Figma file. The product spec is in [`docs/PRD.md`](docs/PRD.md).
+"ByteSpace New Check website" Figma file. The product spec is the
+[PRD on the `feature/landing-page` branch](https://github.com/zobayer-hosen/bytespace/blob/feature/landing-page/docs/PRD.md).
 
 **Stack:** Next.js 15 (App Router) · TypeScript (strict) · Tailwind CSS v4 · Framer Motion 12 · lucide-react
-
-![Landing page](docs/screenshots/home.jpg)
 
 ## Getting started
 
