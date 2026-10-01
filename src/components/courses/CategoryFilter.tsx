@@ -6,8 +6,8 @@ import { Chip } from "@/components/ui/Chip";
 import { courseCategories, FEATURED_LABEL, type CourseCategory } from "@/data/categories";
 import { cn } from "@/lib/cn";
 
-/** Chips shown before "+ More" (Featured … UI/UX Design): together they fill one desktop row. */
-const COLLAPSED_COUNT = 7;
+/** Default chips shown before "+ More" (Featured … UI/UX Design): together they fill one desktop row. */
+const DEFAULT_COLLAPSED_COUNT = 7;
 
 /** `null` is the Featured chip. */
 const chips: readonly (CourseCategory | null)[] = [null, ...courseCategories];
@@ -17,20 +17,28 @@ type CategoryFilterProps = {
   onChange: (category: CourseCategory | null) => void;
   /** `center` is the landing-page layout; `start` lines the chips up under the search toolbar. */
   align?: "center" | "start";
+  /** Chips shown before "+ More", counting Featured. */
+  collapsedCount?: number;
   className?: string;
 };
 
 /**
- * Category chips. The first row is shown until "+ More" expands the rest; the active chip
- * always stays visible, even while collapsed.
+ * Category chips. The first `collapsedCount` are shown until "+ More" expands the rest; the
+ * active chip always stays visible, even while collapsed. "+ More" is hidden when nothing is left over.
  */
-export function CategoryFilter({ value, onChange, align = "center", className }: CategoryFilterProps) {
+export function CategoryFilter({
+  value,
+  onChange,
+  align = "center",
+  collapsedCount = DEFAULT_COLLAPSED_COUNT,
+  className,
+}: CategoryFilterProps) {
   const groupId = useId();
   const [expanded, setExpanded] = useState(false);
-  const hiddenCount = chips.length - COLLAPSED_COUNT;
+  const hiddenCount = chips.length - collapsedCount;
   const visibleChips = expanded
     ? chips
-    : chips.filter((category, index) => index < COLLAPSED_COUNT || category === value);
+    : chips.filter((category, index) => index < collapsedCount || category === value);
 
   return (
     <div id={groupId} role="group" aria-label="Course categories" className={className}>
