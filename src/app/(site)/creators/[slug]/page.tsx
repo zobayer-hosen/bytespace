@@ -57,7 +57,7 @@ export default async function CreatorPage({ params, searchParams }: CreatorPageP
               description={`${creator.name} has no courses for this level or category yet.`}
               action={{
                 label: "Clear filters",
-                href: `/creators/${creator.slug}${clearedSearch ? `?${clearedSearch}` : ""}`,
+                href: `creators/purepearl-studio/${creator.slug}${clearedSearch ? `?${clearedSearch}` : ""}`,
               }}
               className="mt-8"
             />
