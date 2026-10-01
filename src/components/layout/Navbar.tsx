@@ -9,20 +9,56 @@ import { EASE_OUT } from "@/components/motion/variants";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { authNav, mainNav } from "@/data/navigation";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import { cn } from "@/lib/cn";
+import type { NavLink } from "@/types";
 import { Logo } from "./Logo";
 
-function isActive(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  const section = href.split("/")[1];
-  return pathname.startsWith(`/${section}`);
+const sectionIds = mainNav.flatMap((link) => link.sectionId ?? []);
+
+/** Off the home page, a link stays highlighted on the routes named after its section (/courses…, /creators/…). */
+function isRouteActive(pathname: string, sectionId: string | undefined) {
+  return sectionId !== undefined && pathname.startsWith(`/${sectionId}`);
+}
+
+/** Scrolls the home page to a section and mirrors it in the URL hash ("top" = page top, no hash). */
+function scrollToSection(sectionId: string) {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const behavior: ScrollBehavior = reduceMotion ? "instant" : "smooth";
+  const { pathname, search } = window.location;
+
+  if (sectionId === "top") {
+    window.scrollTo({ top: 0, left: 0, behavior });
+    history.replaceState(null, "", pathname + search);
+    return;
+  }
+  // scrollIntoView honours the section's scroll-margin-top (scroll-mt-*).
+  document.getElementById(sectionId)?.scrollIntoView({ behavior, block: "start" });
+  history.replaceState(null, "", `${pathname}${search}#${sectionId}`);
 }
 
 /** Transparent navbar laid over each page's blue header. */
 export function Navbar() {
   const pathname = usePathname();
+  const onHome = pathname === "/";
+  const activeSection = useActiveSection(sectionIds, onHome);
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
+
+  const isActive = (link: NavLink) =>
+    onHome ? link.sectionId === activeSection : isRouteActive(pathname, link.sectionId);
+
+  /** On the home page, scroll instead of navigating; elsewhere the Link goes to `/` or `/#section`. */
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, link: NavLink) => {
+    closeMenu();
+    const { sectionId } = link;
+    const newTab = event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    if (!onHome || !sectionId || newTab) return;
+
+    event.preventDefault();
+    // Let the mobile menu start closing before the scroll begins.
+    requestAnimationFrame(() => scrollToSection(sectionId));
+  };
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -32,14 +68,15 @@ export function Navbar() {
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-8">
             {mainNav.map((link) => {
-              const active = isActive(pathname, link.href);
+              const active = isActive(link);
               return (
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    onClick={(event) => handleNavClick(event, link)}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "text-sm transition-colors hover:text-white",
+                      "text-sm transition-colors hover:text-white focus-visible:outline-white",
                       active ? "font-medium text-white" : "text-white/80",
                     )}
                   >
@@ -91,9 +128,9 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={closeMenu}
-                  aria-current={isActive(pathname, link.href) ? "page" : undefined}
-                  className="rounded-xl px-3 py-3 text-white aria-[current=page]:bg-white/10 aria-[current=page]:font-medium"
+                  onClick={(event) => handleNavClick(event, link)}
+                  aria-current={isActive(link) ? "page" : undefined}
+                  className="rounded-xl px-3 py-3 text-white focus-visible:outline-white aria-[current=page]:bg-white/10 aria-[current=page]:font-medium"
                 >
                   {link.label}
                 </Link>

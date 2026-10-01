@@ -27,7 +27,7 @@ const shapes: DecorationSpec[] = [
 
 export function Hero() {
   return (
-    <BrandSection aria-labelledby="hero-title" className="pt-36 lg:pt-[184px]">
+    <BrandSection id="top" aria-labelledby="hero-title" className="pt-36 lg:pt-[184px]">
       <Decorations items={shapes} />
 
       <Container className="relative text-center">

@@ -4,7 +4,7 @@ import { CourseBrowser } from "./CourseBrowser";
 
 export function DiscoverCourses() {
   return (
-    <section className="py-20 lg:py-24">
+    <section id="courses" className="py-20 lg:py-24">
       <Container>
         <SectionHeading
           title={

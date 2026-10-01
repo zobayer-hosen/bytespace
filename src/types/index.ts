@@ -4,6 +4,8 @@ import type { CourseCategory } from "@/data/categories";
 export type NavLink = {
   label: string;
   href: string;
+  /** Id of the home page section the link scrolls to (`"top"` is the hero). */
+  sectionId?: string;
 };
 
 export type CourseLevel = "Beginner" | "Intermediate" | "Advanced";

@@ -13,7 +13,7 @@ import { media } from "@/data/media";
 
 export function CreateManage() {
   return (
-    <section className="relative isolate overflow-hidden bg-mist pt-4 pb-20 lg:pb-28">
+    <section id="creators" className="relative isolate overflow-hidden bg-mist pt-4 pb-20 lg:pb-28">
       <Glow tone="lime" className="-bottom-40 -left-40 size-[520px]" />
       <Glow tone="blue" className="-right-40 -bottom-48 size-[560px]" />
 
