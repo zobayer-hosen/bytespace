@@ -8,6 +8,12 @@ import type { CourseCategory } from "@/data/categories";
 import { courses } from "@/data/courses";
 import { coursesForChip } from "@/lib/course-filters";
 
+function resultsMessage(count: number, category: CourseCategory | null) {
+  if (count === 0) return `No courses in ${category} yet`;
+  const noun = count === 1 ? "course" : "courses";
+  return category ? `Showing ${count} ${noun} in ${category}` : `Showing ${count} featured ${noun}`;
+}
+
 /** Landing-page category chips and the course grid they filter (one source of truth for both). */
 export function CourseBrowser() {
   // `null` is the Featured chip.
@@ -23,8 +29,8 @@ export function CourseBrowser() {
         className="mx-auto mt-10 max-w-[1080px]"
       />
 
-      <p role="status" className="sr-only">
-        {visibleCourses.length} {visibleCourses.length === 1 ? "course" : "courses"}
+      <p aria-live="polite" className="sr-only">
+        {resultsMessage(visibleCourses.length, category)}
       </p>
       {visibleCourses.length > 0 ? (
         <CourseGrid courses={visibleCourses} className="mt-14 lg:mt-16" />
