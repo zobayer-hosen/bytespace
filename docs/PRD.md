@@ -31,7 +31,7 @@ submitted through a **Pull Request**.
 ### Non-goals (v1)
 
 - Real authentication, a backend or a database (forms validate on the client only).
-- Filter / Level / Category / sort panels and a video player — they have no design yet (see §10).
+- A video player for the course preview — it has no design yet (see §10).
 - CMS integration — content lives in typed data files in `src/data/`.
 
 ---
@@ -97,7 +97,7 @@ Each section is its own component in `src/components/sections/home/`, composed i
 | 1 | **Navbar** | `layout/Navbar` | Logo; center links Home (active), Courses, Creators; right: Sign In, Join Us, cart icon. Transparent over the blue hero. Mobile: hamburger with animated slide-down menu. |
 | 2 | **Hero** | `Hero` | Blue grid background. H1 "Get Access to Hundreds Courses Available", subtitle, search bar ("Course, topic, creator") with lime Search button. Lime half-circle stage with student photo and three floating cards: *UI/UX Design* (200 Courses · 1000+ Students), *Learning Progress* (55% bar), *Happy Students* (4.5 rating, avatar stack, 2K+). 3D shapes float around the edges. |
 | 3 | **Logo cloud** | `LogoCloud` | Grey band with five partner logos (placeholder "Logoipsum" marks). |
-| 4 | **Discover courses** | `DiscoverCourses` | H2 "Discover Your Passion, Build Your Skills", paragraph, category chips (Featured active + 18 more + "+ More"). Clicking a chip sets it active. 3×2 grid of `CourseCard`. |
+| 4 | **Discover courses** | `DiscoverCourses` | H2 "Discover Your Passion, Build Your Skills", paragraph, category chips (Featured active; "+ More" reveals the rest, then "Show less"). Clicking a chip filters the 3×2 grid of `CourseCard` in place (no URL change); a category without courses shows an empty state with "Show featured courses". |
 | 5 | **Learning paths** | `LearningPaths` | H2 "Explore Diverse Learning Paths at Bytespace", paragraph, six `CategoryTile`s (Design, Development, IT & Software, Business, Marketing, Photography). |
 | 6 | **Professional growth** | `GrowthSection` | Soft lime/blue gradient background. Left: H2, paragraph, stats 12K Students · 70+ Courses · 16 Creators. Right: course card, student photo, Learning Progress card, lime squiggle. |
 | 7 | **Create & manage** | `CreateManage` | Left: creator photo, blue *Total Revenue $120.29* and *Year to Date $1,200.38* cards, Happy Students card, squiggle. Right: H2 "Create & Manage Courses Easily.", paragraph, four checklist items. |
@@ -119,9 +119,9 @@ Each page's sections live in `src/components/sections/<page>/`.
 
 | Page | Route | Content and behavior |
 |---|---|---|
-| **Search** | `/courses` | Blue header "Find Your Next Course", search field and a lime "Courses ▾" scope select (search course titles or creator names). Filter / Level / Category and "Most relevant" pills, one scrollable row of category chips, 3-column course grid (18 per page) and numbered pagination. The query lives in the URL (`?q=&in=&page=`) so results are server-rendered and shareable; an empty state offers "Clear search". |
+| **Search** | `/courses` | Blue header "Find Your Next Course", search field and a lime "Courses ▾" scope select (search course titles or creator names). Toolbar: **Filter** (panel to set level + category, then Apply or Clear all), **Level** and **Category** dropdowns (with result counts) and a **sort** dropdown (Most relevant, Most popular, Highest rated, Title A–Z). Category chips under it (first row, "+ More" / "Show less") stay in sync with the Category dropdown. 3-column course grid (18 per page) and numbered pagination. Search, filters, sort and page live in the URL (`?q=&in=&category=&level=&sort=&page=`) so results are server-rendered and shareable; changing a filter is a client-side navigation back to page 1. Empty states offer "Clear filters" or "Clear search". |
 | **Course detail** | `/courses/[slug]` | Blue header with title, subtitle, creator link, level / rating / students pills and a Share button (native share sheet, or copy link). Video poster, then About · Lessons · Reviews tabs. A sticky enrol card spans the blue and white areas: lesson preview, price, Enroll Now, inclusions and the creator. **About:** description, Sneak Peak gallery, Key Points. **Lessons:** modules, lesson content, progress tracking. **Reviews:** rating summary (average plus a bar per star level) and review cards filtered by star rating. |
-| **Creator profile** | `/creators/[slug]` | Blue header with avatar, name, "Creator" badge, tagline, bio, Products / Followers pills and a Follow toggle; then the toolbar and the creator's courses. |
+| **Creator profile** | `/creators/[slug]` | Blue header with avatar, name, "Creator" badge, tagline, bio, Products / Followers pills and a Follow toggle; then the same toolbar (filters + sort, in the URL) and the creator's courses. |
 | **404** | any unknown URL, or an unknown course / creator slug | Giant lime "404" fading into the blue grid, "The page you are looking for doesn't exist", helper text and "Back to Home". |
 
 ## 6. Page requirements — Auth
@@ -183,14 +183,14 @@ src/
 ├── components/
 │   ├── layout/               # Navbar, Footer, Logo, SiteShell, NewsletterForm
 │   ├── sections/             # home/, courses/, course/, creator/, not-found/ — one file per section
-│   ├── courses/              # CourseGrid, CategoryFilter, CourseToolbar
+│   ├── courses/              # CourseGrid, CategoryFilter, CourseToolbar, FilterPanel, useCourseFilters
 │   ├── auth/                 # AuthShowcase, AuthPanel, AuthForm, SocialSignIn, BrandIcons
 │   ├── cards/                # CourseCard, ProgressCard, HappyStudentsCard, TopicCard, RevenueCard, ...
 │   ├── ui/                   # Button, Chip, Pill, Tabs, FormField, Pagination, SectionHeading, ...
 │   ├── shapes/               # 3D decorative SVG components + Decorations layer
 │   └── motion/               # Reveal, Stagger, Float, CountUp, MotionProvider, variants
 ├── data/                     # typed content: courses, creators, categories, home, course-detail, auth, nav, media
-├── lib/                      # cn(), catalogue search, form validation
+├── lib/                      # cn(), catalogue search, course filters/sort, form validation
 └── types/                    # shared TypeScript types
 ```
 
@@ -221,7 +221,7 @@ src/
 - [ ] Search query, scope and page survive a reload (URL state); unknown slugs return 404
 - [ ] Desktop 1440px visually matches Figma; tablet and mobile layouts have no overflow
 - [ ] Navbar links, Sign In → `/login`, Join Us → `/signup`, "Join as Creator" → `/signup`
-- [ ] Category chips toggle the active state
+- [ ] Category chips, Filter, Level, Category and sort controls filter and order the results; + More / Show less work
 - [ ] Login and Signup validate inputs and show errors
 - [ ] Animations run on load and scroll; disabled with reduced motion
 - [ ] Lighthouse: Performance ≥ 90, Accessibility ≥ 95 (desktop)
@@ -258,8 +258,19 @@ supplied 740×416 photo (AI-upscaled 4× with Real-ESRGAN, yellow studio backgro
 `public/images/people/` were made from Unsplash photos. Export the originals from Figma into `public/images/`
 and update `src/data/media.ts`.
 
+**Course data behind the filters.** Filters and sorting only use real course fields:
+
+- Each course has a `category`. The Figma cards show none, so each one was assigned from the course title
+  (e.g. "the Power of Big Data" → Data Science). Categories with no course show an empty state.
+- All six demo courses are Beginner, rated 4.5 and have 26 learners (as on the Figma cards), so the Level
+  filter, "Most popular" and "Highest rated" work but cannot separate them until real data varies.
+- There is no publish date, so a "Newest" sort is not offered.
+- The search page's demo catalogue repeats the six courses to fill five pages, so a category shows the same
+  course many times (e.g. Data Science → 15 cards).
+- On desktop one row holds 7 chips plus "+ More" (Featured … UI/UX Design), so that is the collapsed set.
+
 **Follow-ups.**
 
-- Design and build the Filter / Level / Category panels and sorting (the pills are placeholders).
-- Course categories in the data model so chips and learning-path tiles can filter results.
+- Learning-path tiles and footer category links still open the unfiltered catalogue: their labels (Design,
+  Development, Business, …) are not chip categories.
 - Video player for the course preview, a cart, and real authentication with Facebook / Google.
