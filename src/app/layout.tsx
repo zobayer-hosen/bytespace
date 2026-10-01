@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
-import { ScrollToTopOnReload } from "@/components/layout/ScrollToTopOnReload";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import "./globals.css";
 
@@ -29,8 +28,28 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        {/*
+          Reload: other pages go to /; on / the page starts at the hero. Chrome restores the old scroll position
+          while the page loads (animated, because of `scroll-behavior: smooth`), so make that restore instant and
+          undo it on the next scroll event, until load or the first user input. history.scrollRestoration is left
+          alone so Back/Forward keep their positions.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{
+  var n=performance.getEntriesByType("navigation")[0];
+  if(!n||n.type!=="reload")return;
+  if(location.pathname!=="/"){location.replace("/");return;}
+  if(location.hash)history.replaceState(null,"","/");
+  var s=document.createElement("style");s.textContent="html{scroll-behavior:auto!important}";document.head.appendChild(s);
+  var top=function(){if(window.scrollY!==0)window.scrollTo(0,0);};
+  var input=["wheel","touchstart","keydown","pointerdown"];
+  var stop=function(){removeEventListener("scroll",top);input.forEach(function(t){removeEventListener(t,stop,true);});s.remove();};
+  addEventListener("scroll",top);
+  input.forEach(function(t){addEventListener(t,stop,{capture:true,passive:true});});
+  addEventListener("load",function(){setTimeout(function(){top();stop();});},{once:true});
+}catch(e){}})();` }} />
+      </head>
       <body>
-        <ScrollToTopOnReload />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

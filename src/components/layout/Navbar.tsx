@@ -14,7 +14,9 @@ import { Logo } from "./Logo";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  // Match the link's top-level section, so Creators stays active on every /creators/… page.
+  const section = `/${href.split("/")[1]}`;
+  return pathname === section || pathname.startsWith(`${section}/`);
 }
 
 /** Scrolls the home page back to the hero and drops any #hash. */
