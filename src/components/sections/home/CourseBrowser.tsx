@@ -6,17 +6,13 @@ import { CourseGrid } from "@/components/courses/CourseGrid";
 import { EmptyResults } from "@/components/courses/EmptyResults";
 import type { CourseCategory } from "@/data/categories";
 import { courses } from "@/data/courses";
-import { applyCourseFilters, DEFAULT_COURSE_FILTERS } from "@/lib/course-filters";
+import { coursesForChip } from "@/lib/course-filters";
 
-const featuredCourses = courses.filter((course) => course.featured);
-
-/** Landing-page category chips and the course grid they filter. */
+/** Landing-page category chips and the course grid they filter (one source of truth for both). */
 export function CourseBrowser() {
   // `null` is the Featured chip.
   const [category, setCategory] = useState<CourseCategory | null>(null);
-  const visibleCourses = category
-    ? applyCourseFilters(courses, { ...DEFAULT_COURSE_FILTERS, category })
-    : featuredCourses;
+  const visibleCourses = coursesForChip(courses, category);
 
   return (
     <>
